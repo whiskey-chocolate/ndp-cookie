@@ -5,9 +5,9 @@
 
 ----
 
-This project was generated with `Cookiecutter` along with `@jackbicknell14`'s
+This project was generated with `Cookiecutter` along with `@whiskey-chocolate`'s
 `ndp-cookie` template.
 
 - `Cookiecutter`: https://github.com/audreyr/cookiecutter
-- `@jackbicknell14`: https://github.com/hackebrot
-- `ndp-cookie`: https://github.com/hackebrot/cookiedozer
+- `@whiskey-chocolate`: https://github.com/whiskey-chocolate 
+- `ndp-cookie`: https://github.com/whiskey-chocolate/ndp-cookie
