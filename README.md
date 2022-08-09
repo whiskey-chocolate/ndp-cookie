@@ -51,7 +51,7 @@ cookiecutter https://github.com/whiskey-chocolate/ndp-cookie.git
 2. Update local host for https
    1. `sudo chown -R {username} /private/etc/hosts` (updates ownership of hosts files)
    2. `chmod 755 /private/etc/hosts` (makes hosts file writable)
-   3. Add `127.0.0.1       {project_slug}-api.local` to hosts file
+   3. Add `127.0.0.1       {project_slug}-api.local` to hosts file (make sure your new virtualhosts on the same line to avoid slow resolving see here on [StackOverflow](https://stackoverflow.com/questions/10064581/how-can-i-eliminate-slow-resolving-loading-of-localhost-virtualhost-a-2-3-secon/10200111#10200111)
 3. Install local certificates
    1. `cd certs`
    2. `mkcert {project_slug}-api.local localhost 127.0.0.1 ::1`
