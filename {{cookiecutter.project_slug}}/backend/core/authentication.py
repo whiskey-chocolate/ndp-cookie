@@ -1,18 +1,15 @@
 from django.conf import settings
-from django.conf import settings
-from .models import User
-import firebase_admin
-from firebase_admin import auth
-
+from firebase_admin import auth, credentials, initialize_app
 from rest_framework import authentication
 
-from .exceptions import FirebaseError, InvalidAuthToken, NoAuthToken
+from core.models import User
+from core.exceptions import FirebaseAuthenticationError, InvalidAuthToken, NoAuthToken
 
-creds = firebase_admin.credentials.Certificate(
+creds = credentials.Certificate(
     settings.CREDENTIALS["FIREBASE_APPLICATION_CREDENTIALS"]
 )
 
-firebase_app = firebase_admin.initialize_app(creds)
+firebase_app = initialize_app(creds)
 
 
 class FirebaseAuthentication(authentication.BaseAuthentication):
@@ -34,9 +31,20 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         try:
             uid = decoded_token.get("uid")
         except Exception:
-            raise FirebaseError()
+            raise FirebaseAuthenticationError()
 
         firebase_user = auth.get_user(uid=uid)
         user, created = User.objects.get_or_create(email=firebase_user.email)
+        request_email = request.data.get("email") or request.query_params.get("email")
+        if (request_email is not None) and (request_email != user.email):
+            raise FirebaseAuthenticationError("Email does not match token provided")
+        request_user_id = (
+            request.data.get("user_id")
+            or request.query_params.get("user_id")
+            or request.data.get("owner_id")
+        )
+        if (request_user_id is not None) and (request_user_id != str(user.id)):
+            raise FirebaseAuthenticationError("Id does not match token provided")
 
         return (user, None)
+
