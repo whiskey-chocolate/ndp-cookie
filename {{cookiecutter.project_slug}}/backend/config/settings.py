@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     "rest_framework",
     "corsheaders",
+    "django_filters",
     # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
