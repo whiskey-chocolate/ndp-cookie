@@ -28,7 +28,8 @@ COPY ./scripts/ /app/
 
 # Install python dependencies from poetry
 RUN pip install poetry
-RUN poetry config virtualenvs.create false && poetry install
+RUN poetry config virtualenvs.create false
+RUN poetry install
 
 
 # Make port 8000 available for the app
