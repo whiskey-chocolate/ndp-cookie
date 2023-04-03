@@ -78,12 +78,12 @@ function __install_dependencies {
     done
 }
 
-function {{cookiecutter.project_slug}}_is_live {
+function {{cookiecutter.__package_name}}_is_live {
     # Checks the status of an API endpoint and returns whether it is live or not. 
     # Usage: __is_live 
 
     # Send a GET request to the API endpoint and get the response
-    response=$(curl -s -w "\n%{http_code}" -X GET https://{{cookiecutter.project_slug}}-api.local)
+    response=$(curl -s -w "\n%{http_code}" -X GET https://{{cookiecutter.__package_name}}-api.local)
 
     # Get the body of the response
     body=$(echo "$response" | head -n 1)
@@ -93,15 +93,15 @@ function {{cookiecutter.project_slug}}_is_live {
 
     # Check if the status code is 200 and if the database in the response body is "ok"
     if [ "$status" -eq 200 ] && [ "$(echo "$body" | jq -r '.database')" == "ok" ]; then
-        # If the status code is 200 and the database is "ok", return "{{cookiecutter.project_slug}} status: live"
-        echo "{{cookiecutter.project_slug}} status: live"
+        # If the status code is 200 and the database is "ok", return "{{cookiecutter.__package_name}} status: live"
+        echo "{{cookiecutter.__package_name}} status: live"
     else
-        echo "{{cookiecutter.project_slug}} status: error"
+        echo "{{cookiecutter.__package_name}} status: error"
     fi
 }
 
 function __build_from_ndp {
-    # Builds the {{cookiecutter.project_slug}}-api container from the NDP.
+    # Builds the {{cookiecutter.__package_name}}-api container from the NDP.
     # Usage: __build_from_ndp
 
     # Create a virtual environment to isolate our cookiecutter locally
@@ -118,13 +118,13 @@ function __build_from_ndp {
 # System functions start with _ and aren't listed in this script's help menu.
 # -----------------------------------------------------------------------------
 
-function install_{{cookiecutter.project_slug}} {
-    # Installs {{cookiecutter.project_slug}} and its dependencies.
+function install_{{cookiecutter.__package_name}} {
+    # Installs {{cookiecutter.__package_name}} and its dependencies.
     __build_from_ndp
 
     # Sets up tmuxinator aliases and .config files
 
-    # Adds the {{cookiecutter.project_slug}}-api.local domain to /etc/hosts
+    # Adds the {{cookiecutter.__package_name}}-api.local domain to /etc/hosts
 
     # Installs local certificates
 
@@ -133,8 +133,8 @@ function install_{{cookiecutter.project_slug}} {
     # Tells user to go to firebase and download the google-services.json file
 }
 
-function start_{{cookiecutter.project_slug}} {
-    # Starts {{cookiecutter.project_slug}} via docker-compose.
+function start_{{cookiecutter.__package_name}} {
+    # Starts {{cookiecutter.__package_name}} via docker-compose.
 
     # Checks the /status API endpoint
 

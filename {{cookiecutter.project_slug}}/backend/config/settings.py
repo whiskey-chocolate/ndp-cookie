@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "0.0.0.0",
     "127.0.0.1",
-    "{{cookiecutter.project_slug}}-api.local",
+    "{{cookiecutter.__project_slug}}-api.local",
 ]
 
 # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -43,7 +43,7 @@ CREDENTIALS = {
     "FIREBASE_APPLICATION_CREDENTIALS": env.json("FIREBASE_APPLICATION_CREDENTIALS"),
 }
 
-PROJECT_NAME = "{{cookiecutter.project_slug}}"
+PROJECT_NAME = "{{cookiecutter.__project_slug}}"
 
 # Application definition
 

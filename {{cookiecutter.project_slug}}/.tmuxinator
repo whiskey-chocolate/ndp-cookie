@@ -1,7 +1,7 @@
 # ./.tmuxinator.yml
 
-name: { { cookiecutter.project_slug } }
-root: ~/sandboxes/{{cookiecutter.project_slug}}/
+name: { { cookiecutter.__project_slug } }
+root: ~/sandboxes/{{cookiecutter.__project_slug}}/
 
 windows:
     - honeybee:
@@ -11,8 +11,8 @@ windows:
           # "before" represents legacy functionality and will be deprecated in a future release, in favour of "after"
           # synchronize: after
           panes:
-              - echo "Running {{cookiecutter.project_slug}}"
-              - echo "Loading {{cookiecutter.project_slug}} tmuxinator from local"
+              - echo "Running {{cookiecutter.__project_slug}}"
+              - echo "Loading {{cookiecutter.__project_slug}} tmuxinator from local"
               - echo "Running..." && docker-compose up -d -build
 
     - db: psql
