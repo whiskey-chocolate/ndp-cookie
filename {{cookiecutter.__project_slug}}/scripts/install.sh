@@ -33,20 +33,29 @@ function add_alias_for_run_commands {
 }
 
 function install {
+    echo "{{cookiecutter.__project_slug}} dev environment installed!"
     # Installs a_test and its dependencies.
+    echo "1. Installing dependencies..."
     install_dependencies
 
     # Sets up tmuxinator aliases and .config files
+    echo "2. Setting up tmuxinator..."
     add_alias_for_run_commands
 
     # Adds the {{cookiecutter.__project_slug}}-api.local domain to /etc/hosts
+    echo "3. Adding {{cookiecutter.__project_slug}}-api.local to /etc/hosts..."
     add_domain_to_hosts {{cookiecutter.__project_slug}}-api.local
 
     # Installs local certificates
+    echo "4. Installing local certificates..."
 
     # Updates the env file with the correct values
+    echo "5. Updating .env file..."
 
     # Tells user to go to firebase and download the google-services.json file
+    echo "6. Set up firebase..." 
+
+    echo "{{cookiecutter.__project_slug}} dev environment installed!"
 }
 
 install

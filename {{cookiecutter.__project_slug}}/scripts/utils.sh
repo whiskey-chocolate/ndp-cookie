@@ -72,7 +72,7 @@ function add_domain_to_hosts {
 
   if [[ -n "$existing_entry" ]]; then
     echo "Appending domain to existing entry in hosts file..."
-    sudo sed -i '' "s|^127\.0\.0\.1\s\+.*|& $domain|" "$hosts_file"
+    sudo sed -i '' "s|^127\.0\.0\.1\s*.*|& $domain|" "$hosts_file"
     echo "Domain appended to existing entry in hosts file."
   else
     echo "Adding new entry to hosts file..."
