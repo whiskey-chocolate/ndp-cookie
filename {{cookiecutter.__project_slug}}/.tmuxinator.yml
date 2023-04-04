@@ -1,18 +1,18 @@
 # ./.tmuxinator.yml
 
-name: { { cookiecutter.__project_slug } }
+name: "{{cookiecutter.__project_slug}}"
 root: ~/sandboxes/{{cookiecutter.__project_slug}}/
 
 windows:
-    - honeybee:
+    - "{{cookiecutter.__project_slug}}":
           layout: 18fb,189x45,0,0[189x33,0,0{52x33,0,0,21,136x33,53,0,37},189x11,0,34,32]
 
           # Synchronize all panes of this window, can be enabled before or after the pane commands run.
           # "before" represents legacy functionality and will be deprecated in a future release, in favour of "after"
           # synchronize: after
           panes:
-              - echo "Running {{cookiecutter.__project_slug}}"
-              - echo "Loading {{cookiecutter.__project_slug}} tmuxinator from local"
-              - echo "Running..." && docker-compose up -d -build
+              - echo "Running {{cookiecutter.__project_slug}} tmuxinator from $(pwd)"
+              - {{cookiecutter.__package_name}}_run
+              - docker-compose up --build
 
     - db: psql

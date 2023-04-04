@@ -1,25 +1,23 @@
 [tool.poetry]
 name = "{{cookiecutter.__project_slug}}"
-package = "{{cookiecutter.__package_name}}"
-slug = "{{cookiecutter.__project_slug}}"
 version = "{{cookiecutter.version}}"
 description = "{{cookiecutter.short_description}}"
 authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-psycopg2 = "^2.9.3"
-Django = "^4.1"
-djangorestframework = "^3.13.1"
-redis = "^4.3.4"
+python = "^3.11"
+psycopg2 = "^2.9.5"
+django = "^4.1.7"
+djangorestframework = "^3.14.0"
+redis = "^4.5.3"
 celery = "^5.2.7"
-flake8 = "^5.0.4"
-black = "^22.6.0"
-django-environ = "^0.9.0"
+flake8 = "^6.0.0"
+black = "^23.3.0"
+django-environ = "^0.10.0"
 gunicorn = "^20.1.0"
-firebase-admin = "^5.2.0"
-django-cors-headers = "^3.13.0"
-django-filter = "^22.1"
+firebase-admin = "^6.1.0"
+django-cors-headers = "^3.14.0"
+django-filter = "^23.1"
 
 [tool.poetry.dev-dependencies]
 

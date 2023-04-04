@@ -1,5 +1,5 @@
 # Pull base image
-FROM python:3.10.6-slim-buster as app
+FROM python:3.11.2-slim-buster as app
 LABEL maintainer="{{cookiecutter.full_name}} <{{cookiecutter.email}}>"
 
 WORKDIR /app/backend
@@ -13,7 +13,6 @@ RUN apt-get update \
 
 
 # Set environment variables
-USER python
 ARG DEBUG="false"
 ENV DEBUG="${DEBUG}" \
   PYTHONUNBUFFERED="true" \

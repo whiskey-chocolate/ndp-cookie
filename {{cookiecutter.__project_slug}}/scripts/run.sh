@@ -11,8 +11,7 @@ if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
 
-source ./system.sh
-source ./install.sh
+source scripts/system.sh
 # -----------------------------------------------------------------------------
 # Helper functions start with _ and aren't listed in this script's help menu.
 # -----------------------------------------------------------------------------

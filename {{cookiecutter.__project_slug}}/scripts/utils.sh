@@ -47,7 +47,7 @@ function __is_package_installed() {
 function add_alias {
     alias_name="$1"
     alias_command="$2"
-    bash_profile="$HOME/.bash_profile"
+    bash_profile="$HOME/.dotfiles/chocolate/.aliases"
 
     # Check if alias already exists
     if grep -q "alias $alias_name=" "$bash_profile"; then
@@ -64,6 +64,19 @@ function get_script_dir() {
   local dir="$(cd "$(dirname "$script")" >/dev/null 2>&1 && pwd)"
   echo "$dir"
 }
+function add_alias_for_tmuxinator {
+    # Adds an alias for tmuxinator
+    # Usage: add_alias_for_tmuxinator
+
+    unlink "$HOME/.config/tmuxinator/{{cookiecutter.__project_slug}}.yml" 2>/dev/null
+    # Get the path to the tmuxinator config file
+    tmuxinator_config_file="./.tmuxinator.yml"
+    ln "$tmuxinator_config_file" "$HOME/.config/tmuxinator/{{cookiecutter.__project_slug}}.yml"
+
+    # Add an alias for tmuxinator
+    add_alias "{{cookiecutter.__package_name}}_tmuxinator" "tmuxinator start {{cookiecutter.__project_slug}}"
+
+}
 
 function add_domain_to_hosts {
   local domain="$1"
@@ -79,4 +92,42 @@ function add_domain_to_hosts {
     echo "127.0.0.1 $domain" | sudo tee -a "$hosts_file" > /dev/null
     echo "New entry added to hosts file."
   fi
+}
+
+function install_local_certificates {
+    local domain="$1"
+    (mkdir certs && cd certs && mkcert -key-file "domain-key.pem" -cert-file "domain.pem" "$domain" localhost 127.0.0.1 ::1 )
+}
+
+function move_env_example() {
+    if [ -f ".env.example" ]; then
+        mv .env.example .env
+        echo ".env.example moved to .env"
+    else
+        echo "No .env.example file found"
+    fi
+}
+
+function update_secret_key() {
+    # Generate a new key and save it to a file
+    # openssl rand -out /tmp/newkey.key 32
+    openssl rand -out /tmp/newkey.key -base64 32 | tr -d '/+' | head -c 32
+    echo "Generated new key: $(cat /tmp/newkey.key)"
+
+    # Read the .env file into a variable
+    env_file=".env"
+    env_contents=$(cat "$env_file")
+
+    # Replace the existing SECRET_KEY value with the new key (with quotes)
+    # new_contents=$(echo "$env_contents" | sed -E "s/^SECRET_KEY=.*/SECRET_KEY=\"$(cat /tmp/newkey.key )\"/")
+    new_contents=$(echo "$env_contents" | sed -E "s#^SECRET_KEY=.*#SECRET_KEY=\"$(cat /tmp/newkey.key)\"#")
+
+    # Save the updated contents back to the .env file
+    echo "$new_contents" > "$env_file"
+
+    # Clean up the temporary key file
+    rm /tmp/newkey.key
+
+    # Print a message to confirm the key was updated
+    echo "SECRET_KEY updated."
 }

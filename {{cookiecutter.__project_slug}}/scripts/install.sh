@@ -7,7 +7,7 @@ function install_dependencies {
     # Usage: install_dependencies 
 
     # Define a list of dependencies
-    dependencies=("jq" "tmux" "tmuxinator")
+    dependencies=("jq" "tmux" "tmuxinator" "mkcert")
 
     # Iterate over the dependencies and install them with the appropriate arch flag
     for package in "${dependencies[@]}"; do
@@ -32,30 +32,43 @@ function add_alias_for_run_commands {
     add_alias "{{cookiecutter.__package_name}}_run" "$target"
 }
 
+function update_env_file {
+    # Updates the .env file with the correct values
+    # Usage: update_env_file
+
+    move_env_example
+    update_secret_key
+}
+
 function install {
-    echo "{{cookiecutter.__project_slug}} dev environment installed!"
+    echo "-------- Installing {{cookiecutter.__project_slug}} dev environment --------------------"
     # Installs a_test and its dependencies.
-    echo "1. Installing dependencies..."
+    echo "-------- 1. Installing dependencies...   -----------------------------------------------"
     install_dependencies
 
     # Sets up tmuxinator aliases and .config files
-    echo "2. Setting up tmuxinator..."
+    echo "-------- 2. Setting up tmuxinator...      ----------------------------------------------"
     add_alias_for_run_commands
+    add_alias_for_tmuxinator
 
     # Adds the {{cookiecutter.__project_slug}}-api.local domain to /etc/hosts
-    echo "3. Adding {{cookiecutter.__project_slug}}-api.local to /etc/hosts..."
+    echo "-------- 3. Adding {{cookiecutter.__project_slug}}-api.local to /etc/hosts... ----------"
     add_domain_to_hosts {{cookiecutter.__project_slug}}-api.local
 
     # Installs local certificates
-    echo "4. Installing local certificates..."
+    echo "-------- 4. Installing local certificates... -------------------------------------------"
+    install_local_certificates {{cookiecutter.__project_slug}}-api.local
 
     # Updates the env file with the correct values
-    echo "5. Updating .env file..."
+    echo "-------- 5. Updating .env file... ------------------------------------------------------"
+    update_env_file
 
     # Tells user to go to firebase and download the google-services.json file
-    echo "6. Set up firebase..." 
+    echo "-------- 6. Set up firebase... ---------------------------------------------------------" 
 
-    echo "{{cookiecutter.__project_slug}} dev environment installed!"
+    echo "-------- {{cookiecutter.__project_slug}} dev environment installed! --------------------"
+
+    {{cookiecutter.__package_name}}_tmuxinator
 }
 
 install

@@ -12,7 +12,7 @@ if [[ ! -t 1 ]]; then
 fi
 
 
-function {{cookiecutter.__project_slug}}_is_live {
+function is_live {
     # Checks the status of an API endpoint and returns whether it is live or not. 
     # Usage: __is_live 
 
