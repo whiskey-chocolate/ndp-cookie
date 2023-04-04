@@ -65,3 +65,18 @@ function get_script_dir() {
   echo "$dir"
 }
 
+function add_domain_to_hosts {
+  local domain="$1"
+  local hosts_file="/private/etc/hosts"
+  local existing_entry=$(grep -E "^127\.0\.0\.1\s+" "$hosts_file")
+
+  if [[ -n "$existing_entry" ]]; then
+    echo "Appending domain to existing entry in hosts file..."
+    sudo sed -i '' "s|^127\.0\.0\.1\s\+.*|& $domain|" "$hosts_file"
+    echo "Domain appended to existing entry in hosts file."
+  else
+    echo "Adding new entry to hosts file..."
+    echo "127.0.0.1 $domain" | sudo tee -a "$hosts_file" > /dev/null
+    echo "New entry added to hosts file."
+  fi
+}

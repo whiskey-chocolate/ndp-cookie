@@ -28,9 +28,10 @@ function install_dependencies {
 
 function add_alias_for_run_commands {
     dir="$(get_script_dir)"
-    target="bash $HOME/$pwd/run.sh"
+    target="bash $HOME/$dir/run.sh"
     add_alias "{{cookiecutter.__package_name}}_run" "$target"
 }
+
 function install {
     # Installs a_test and its dependencies.
     install_dependencies
@@ -38,7 +39,8 @@ function install {
     # Sets up tmuxinator aliases and .config files
     add_alias_for_run_commands
 
-    # Adds the a_test-api.local domain to /etc/hosts
+    # Adds the {{cookiecutter.__project_slug}}-api.local domain to /etc/hosts
+    add_domain_to_hosts {{cookiecutter.__project_slug}}-api.local
 
     # Installs local certificates
 

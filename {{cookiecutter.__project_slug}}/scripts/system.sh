@@ -12,12 +12,12 @@ if [[ ! -t 1 ]]; then
 fi
 
 
-function a_test_is_live {
+function {{cookiecutter.__project_slug}}_is_live {
     # Checks the status of an API endpoint and returns whether it is live or not. 
     # Usage: __is_live 
 
     # Send a GET request to the API endpoint and get the response
-    response=$(curl -s -w "\n%{http_code}" -X GET https://a_test-api.local)
+    response=$(curl -s -w "\n%{http_code}" -X GET https://{{cookiecutter.__project_slug}}-api.local)
 
     # Get the body of the response
     body=$(echo "$response" | head -n 1)
@@ -27,10 +27,10 @@ function a_test_is_live {
 
     # Check if the status code is 200 and if the database in the response body is "ok"
     if [ "$status" -eq 200 ] && [ "$(echo "$body" | jq -r '.database')" == "ok" ]; then
-        # If the status code is 200 and the database is "ok", return "a_test status: live"
-        echo "a_test status: live"
+        # If the status code is 200 and the database is "ok", return "{{cookiecutter.__project_slug}} status: live"
+        echo "{{cookiecutter.__project_slug}} status: live"
     else
-        echo "a_test status: error"
+        echo "{{cookiecutter.__project_slug}} status: error"
     fi
 }
 
@@ -38,9 +38,9 @@ function a_test_is_live {
 # System functions start with _ and aren't listed in this script's help menu.
 # -----------------------------------------------------------------------------
 
-function start_a_test {
-    # Starts a_test via docker-compose.
-    echo "Starts a_test via docker-compose."
+function start_{{cookiecutter.__package_name}} {
+    # Starts {{cookiecutter.__project_slug}} via docker-compose.
+    echo "Starts {{cookiecutter.__project_slug}} via docker-compose."
 
     # Checks the /status API endpoint
 
