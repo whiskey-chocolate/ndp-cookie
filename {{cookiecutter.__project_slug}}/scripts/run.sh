@@ -35,6 +35,23 @@ function cmd {
   _dc backend "${@}"
 }
 
+function black {
+    # Run black code formatter
+    TTY="-T" cmd black "${@}"
+}
+
+function prettier {
+    # Run prettier code formatter
+    TTY="-T" cmd_frontend npx prettier --write .
+}
+
+function install-git-hooks {
+    # Install git hooks
+    chmod +x scripts/git-hooks/*
+    rm -rf .git/hooks/*
+    ln scripts/git-hooks/* .git/hooks/
+
+}
 function manage {
   # Run any manage.py commands
 

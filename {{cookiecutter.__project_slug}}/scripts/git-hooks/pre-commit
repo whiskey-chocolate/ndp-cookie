@@ -1,0 +1,3 @@
+echo "Running pre-commit hooks..."
+# ./run.sh black .
+# ./run.sh prettier
